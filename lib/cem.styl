@@ -1,0 +1,156 @@
+/*
+** @Author: Aman Singh
+** @Email: Amanpreet.dev@gmail.com
+*/
+
+$componentPrefix = "cmp";
+$propertyPrefix = "p";
+
+__warn($obj) { warn(""+$obj) }
+
+__componentDescriptor($cmpName){
+	return $componentPrefix + '_' + $cmpName;
+}
+
+__getObjectDescriptor($objectName) {
+	if match('Component$', $objectName) {
+		$objName = pop( match('^([a-zA-Z0-9-_]+)Component$', $objectName) )+''
+		if $result && length($result) > 0 {
+			$returnObject = {};
+			$returnObject['name'] = $objName
+			$returnObject['type'] = 'COMPONENT'
+			$returnObject['descriptor'] = __componentDescriptor($objName)
+			return $returnObject;
+		}
+	}
+	if match('Entity$', $objectName) {
+		$objName = pop( match('^([a-zA-Z0-9-_]+)Entity$', $objectName) )+''
+		if $result && length($result) > 0 {
+			$returnObject = {};
+			$returnObject['name'] = $objName
+			$returnObject['type'] = 'Entity'
+			$returnObject['descriptor'] = $objName
+			return $returnObject;
+		}
+	}
+}
+
+__getChainDescriptor($objectChain) {
+	$chain = split('.', $objectChain);
+	$result = ()
+	if length( $chain ) > 0 {
+		for $chainEl in $chain {
+			$elDescriptor = __getObjectDescriptor($chainEl);
+			if( $elDescriptor ){
+				push($result, $elDescriptor.descriptor)
+			} else {
+				__warn(s('Unknown Type "%s" with selector "%s"', $chainEl, $objectChain))
+				return null
+			}
+		}
+	} else {
+		$elDescriptor = __getObjectDescriptor($chainEl);
+		if( $elDescriptor ){
+			push($result, $elDescriptor.descriptor)
+		}
+	}
+	return '.' + join("__", $result)
+}
+
+CreateComponentObject($name, $extends = null ) {
+	if mixin == 'root' {
+		_$objectSelector = '.'+__componentDescriptor($name)
+	} else if mixin{
+		if called-from[0] == 'Modifier' {
+			_$objectSelector = '.'+__componentDescriptor($name)
+		} else {
+			_$objectSelector = '&__'+__componentDescriptor($name)
+		}
+	}
+	
+	{_$objectSelector} {
+		if $extends {
+			_$parentObjectSelector = __getChainDescriptor($extends)
+			// Commented due to a stylus bug
+			// if _$parentObjectSelector && selector-exists( _$parentObjectSelector+'' ){
+			if _$parentObjectSelector {
+				@extends {_$parentObjectSelector};
+			} else {
+				__warn(s('Cannot extend "%s" with selector "%s", no such object.', $extends, _$parentObjectSelector))
+			}
+		}
+		{block}
+	}
+}
+
+CreateEntityObject($name, $extends = null ) {
+	if mixin == 'root' {
+		error('Entities cannot be defined at root level, Skipping Entity Definition:' + $name)
+	} else if mixin{
+		_$objectSelector = '&__'+$name
+	}
+	
+	{_$objectSelector} {
+		if $extends {
+			_$parentObjectSelector = __getChainDescriptor($extends)
+			// Commented due to a stylus bug
+			// if _$parentObjectSelector && selector-exists( _$parentObjectSelector+'' ){
+			if _$parentObjectSelector {
+				@extends {_$parentObjectSelector};
+			} else {
+				__warn(s('Cannot extend "%s" with selector "%s", no such object.', $extends, _$parentObjectSelector))
+			}
+		}
+		{block}
+	}
+}
+
+CreateModifierObject($type, $name, global=false) {
+	if global {
+		/.{$type}--{$name} {
+			{block}
+		}
+	} else {
+		&.{$type}--{$name} {
+			{block}
+		}
+	}
+}
+
+CreatePropertyObject($name, $value = null) {
+	if $value {
+		if $value is a 'string' {
+			&.{$propertyPrefix}_{$name}--{$value}{
+				{block}
+			}
+		} else {
+			__warn(s('Value "%s" for property "%s" is not a string', $value, $name))
+		}
+	} else {
+		&.{$propertyPrefix}_{$name}{
+			{block}
+		}
+	}
+}
+
+CreateValueObject($value) {
+	if $value {
+		if $value is a 'string' {
+			&--{$value} {
+				{block}
+			}
+		} else {
+			__warn(s('Value "%s" for +Value(..) is not a string', $value))
+		}
+	}
+}
+
+// Default Modifiers
+MOD_BOOL 	= 'is'
+MOD_USE 	= 'use'
+
+Component 	= CreateComponentObject
+Entity 		= CreateEntityObject
+Modifier 	= CreateModifierObject
+Property 	= CreatePropertyObject
+Value 		= CreateValueObject

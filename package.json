@@ -1,0 +1,15 @@
+{
+  "name": "css-cem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "stylus -w examples -o dist/examples.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "stylus": "^0.54.5"
+  }
+}

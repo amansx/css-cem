@@ -1,26 +1,17 @@
-# CEM - Component Entity Modifier for CSS
+================================================
+|        Component, Entity, Modifier           |
+================================================
 
++----------------------------+
+|                            |
+|     MY DIALOG BOX TITLE    |
+|                            |
+|                            |
+|         +--------+         |
+|         |   OK   |         |
+|         +--------+         |
++----------------------------+
 
-CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus and is designed to aid in the process of scaling and maintaining css.
-
-## How does it work?
-#### Consider a Dialog box
-
-```
-    +----------------------------+
-    |                            |
-    |      DIALOG BOX TITLE      |
-    |                            |
-    |                            |
-    |         +--------+         |
-    |         |   OK   |         |
-    |         +--------+         |
-    +----------------------------+
-```
-#### CEM Style of CSS generation
-##### Markup
-
-```html
 <body class="use--theme-materialDesign">
 	<div class="cmp_dialog p_lyt--fullsize is--visible">
 		<h1 class="cmp_dialog__title"></h1>
@@ -28,12 +19,9 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 	</div>
 </body>
 
-```
-
-
-##### Styles
-
-```css
+=======================================
+|               Stylus                |
+=======================================
 +Component(dialog) {
 
 	width: 100px;
@@ -72,5 +60,3 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 		}
 	}
 }
-
-```
