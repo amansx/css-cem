@@ -17,12 +17,12 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
     |         +--------+         |
     +----------------------------+
 ```
-#### CEM Style of CSS generation
+#### CEM Style
 ##### Markup
 
 ```html
 <body class="use--theme-materialDesign">
-	<div class="cmp_dialog p_lyt--fullsize is--visible">
+	<div class="cmp_dialog p_lyt--fullsize is--hidden">
 		<h1 class="cmp_dialog__title"></h1>
 		<button class="cmp_dialog__confirmBtn"> OK </button>
 	</div>
@@ -33,7 +33,7 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 
 ##### Styles
 
-```css
+```stylus
 +Component(dialog) {
 
 	width: 100px;
@@ -62,6 +62,10 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 	
 }
 
++Modifier(MOD_BOOL, 'hidden') {
+	display: none;
+}
+
 +Modifier(MOD_USE, 'theme-materialDesign') {
 	+Component(cancelDialog) {
 		+Entity(title) {
@@ -71,6 +75,40 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 			border: 1px dark-red solid;
 		}
 	}
+}
+
+```
+
+
+#### Generated CSS
+```css
+.cmp_dialog {
+  width: 100px;
+}
+.cmp_dialog__title {
+  color: #808080;
+}
+.cmp_dialog__confirmBtn {
+  border: 1px #000 solid;
+}
+.cmp_cancelDialog__title {
+  color: #f00;
+}
+.cmp_cancelDialog__cancelBtn {
+  border: 1px #f00 solid;
+}
+.cmp_cancelDialog +Property (lyt,
+.cmp_cancelDialog 'fullsize') {
+  width: 100%;
+}
+.is--hidden {
+  display: none;
+}
+.use--theme-materialDesign .cmp_cancelDialog__title {
+  color: dark-red;
+}
+.use--theme-materialDesign .cmp_cancelDialog__confirmBtn {
+  border: 1px dark-red solid;
 }
 
 ```

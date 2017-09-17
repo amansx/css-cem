@@ -1,6 +1,7 @@
 @import('../lib/cem');
 
 +Component(dialog) {
+
 	width: 100px;
 	
 	+Entity(title) { 
@@ -12,25 +13,32 @@
 
 }
 
-+Component(cancelDialog) {
-	+Entity(title, $extends: 'dialogComponent.titleEntity') {
++Component(cancelDialog, extends: dialogComponent) {
+	
+	+Entity(title, extends: 'dialogComponent.titleEntity') {
 		color: red;
 	}
-	+Entity(cancelBtn, $extends: 'dialogComponent.confirmBtnEntity') {
+	+Entity(cancelBtn, extends: 'dialogComponent.confirmBtnEntity') {
 		border: 1px red solid;
 	}
 
-	+Property(lyt, 'fullsize') {
+	+Property (lyt, 'fullsize') {
 		width: 100%;
-	}	
+	}
+	
 }
 
++Modifier(MOD_BOOL, 'hidden') {
+	display: none;
+}
 
-/*! Themeable Styles */
 +Modifier(MOD_USE, 'theme-materialDesign') {
 	+Component(cancelDialog) {
 		+Entity(title) {
 			color: dark-red;
+		}
+		+Entity(confirmBtn) { 
+			border: 1px dark-red solid;
 		}
 	}
 }
