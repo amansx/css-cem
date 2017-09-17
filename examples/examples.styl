@@ -1,9 +1,7 @@
 @import('../lib/cem');
 
 +Component(dialog) {
-
-	width: 100px;
-	
+	width: 100px;	
 	+Entity(title) { 
 		color: gray; 
 	}	
@@ -14,7 +12,6 @@
 }
 
 +Component(cancelDialog, extends: dialogComponent) {
-	
 	+Entity(title, extends: 'dialogComponent.titleEntity') {
 		color: red;
 	}
@@ -25,7 +22,6 @@
 	+Property(lyt, 'fullsize') {
 		width: 100%;
 	}
-	
 }
 
 +Modifier(MOD_BOOL, 'hidden') {
@@ -35,10 +31,10 @@
 +Modifier(MOD_USE, 'theme-materialDesign') {
 	+Component(cancelDialog) {
 		+Entity(title) {
-			color: dark-red;
+			color: crimson;
 		}
 		+Entity(confirmBtn) { 
-			border: 1px dark-red solid;
+			border: 1px crimson solid;
 		}
 	}
 }
