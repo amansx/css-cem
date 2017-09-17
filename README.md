@@ -47,11 +47,11 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 
 }
 
-+Component(cancelDialog, extends: dialogComponent) {
-	+Entity(title, extends: 'dialogComponent.titleEntity') {
++Component(cancelDialog) {
+	+Entity(title, $extends: 'dialogComponent.titleEntity') {
 		color: red;
 	}
-	+Entity(cancelBtn, extends: 'dialogComponent.confirmBtnEntity') {
+	+Entity(cancelBtn, $extends: 'dialogComponent.confirmBtnEntity') {
 		border: 1px red solid;
 	}
 
@@ -82,10 +82,12 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 .cmp_dialog {
   width: 100px;
 }
-.cmp_dialog__title {
+.cmp_dialog__title,
+.cmp_cancelDialog__title {
   color: #808080;
 }
-.cmp_dialog__confirmBtn {
+.cmp_dialog__confirmBtn,
+.cmp_cancelDialog__cancelBtn {
   border: 1px #000 solid;
 }
 .cmp_cancelDialog__title {
@@ -106,5 +108,4 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 .use--theme-materialDesign .cmp_cancelDialog__confirmBtn {
   border: 1px #dc143c solid;
 }
-
 ```

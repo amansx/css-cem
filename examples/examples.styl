@@ -11,11 +11,11 @@
 
 }
 
-+Component(cancelDialog, extends: dialogComponent) {
-	+Entity(title, extends: 'dialogComponent.titleEntity') {
++Component(cancelDialog) {
+	+Entity(title, $extends: 'dialogComponent.titleEntity') {
 		color: red;
 	}
-	+Entity(cancelBtn, extends: 'dialogComponent.confirmBtnEntity') {
+	+Entity(cancelBtn, $extends: 'dialogComponent.confirmBtnEntity') {
 		border: 1px red solid;
 	}
 
