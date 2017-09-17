@@ -56,7 +56,7 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 		border: 1px red solid;
 	}
 
-	+Property (lyt, 'fullsize') {
+	+Property(lyt, 'fullsize') {
 		width: 100%;
 	}
 	
@@ -97,8 +97,7 @@ CEM is an extension of [BEM](http://getbem.com/introduction/) written in Stylus 
 .cmp_cancelDialog__cancelBtn {
   border: 1px #f00 solid;
 }
-.cmp_cancelDialog +Property (lyt,
-.cmp_cancelDialog 'fullsize') {
+.cmp_cancelDialog.p_lyt--fullsize {
   width: 100%;
 }
 .is--hidden {
